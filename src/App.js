@@ -29,7 +29,7 @@ export const App = () => {
   const location = useLocation();
 
   return (
-    <div className="font-Nunito">
+    <div className="font-Nunito text-slate-700">
       <AnimatePresence>
         <Routes location={location} key={location.pathname}>
           <Route
