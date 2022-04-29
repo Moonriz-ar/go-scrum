@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 
 const validate = (values) => {
@@ -15,7 +16,9 @@ const validate = (values) => {
   return errors;
 };
 
-function Login() {
+export const Login = () => {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,7 +29,7 @@ function Login() {
       console.log("formik email", values.email);
       console.log("formik password", values.password);
       localStorage.setItem("logged", "yes");
-      console.log("local storage", localStorage.getItem("logged"));
+      navigate("/", { replace: true });
     },
   });
 
@@ -71,6 +74,4 @@ function Login() {
       </form>
     </section>
   );
-}
-
-export default Login;
+};
