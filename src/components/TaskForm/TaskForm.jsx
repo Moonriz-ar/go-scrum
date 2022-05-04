@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import * as yup from "yup";
+import * as Yup from "yup";
 
 function TaskForm() {
   const initialValues = {
@@ -14,8 +14,16 @@ function TaskForm() {
     alert();
   };
 
-  const formik = useFormik({ initialValues, onSubmit });
-  const { handleSubmit, handleChange } = formik;
+  const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .required("Please enter title")
+      .min(6, "The minimun amount of characters is 6."),
+    status: Yup.string().required(),
+    priority: Yup.string().required(),
+  });
+
+  const formik = useFormik({ initialValues, validationSchema, onSubmit });
+  const { handleSubmit, handleChange, errors } = formik;
 
   return (
     <section>
@@ -28,6 +36,7 @@ function TaskForm() {
               onChange={handleChange}
               placeholder="Enter a title for the task..."
             />
+            <div>{errors.title && <span>{errors.title}</span>}</div>
           </div>
           <div>
             <select name="status" onChange={handleChange}>
@@ -36,6 +45,7 @@ function TaskForm() {
               <option value="inProcess">In process</option>
               <option value="finished">Finished</option>
             </select>
+            <div>{errors.status && <span>{errors.status}</span>}</div>
           </div>
           <div>
             <select name="priority" onChange={handleChange}>
@@ -44,6 +54,7 @@ function TaskForm() {
               <option value="medium">Medium</option>
               <option value="high">High</option>
             </select>
+            <div>{errors.priority && <span>{errors.priority}</span>}</div>
           </div>
         </div>
 
