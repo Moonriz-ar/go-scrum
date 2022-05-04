@@ -6,7 +6,7 @@ function TaskForm() {
   const initialValues = {
     title: "",
     status: "",
-    prority: "",
+    priority: "",
     description: "",
   };
 
@@ -23,7 +23,7 @@ function TaskForm() {
   });
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
-  const { handleSubmit, handleChange, errors } = formik;
+  const { handleSubmit, handleChange, handleBlur, errors, touched } = formik;
 
   return (
     <section>
@@ -34,27 +34,36 @@ function TaskForm() {
             <input
               name="title"
               onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Enter a title for the task..."
             />
-            <div>{errors.title && <span>{errors.title}</span>}</div>
+            <div>
+              {errors.title && touched.title && <span>{errors.title}</span>}
+            </div>
           </div>
           <div>
-            <select name="status" onChange={handleChange}>
+            <select name="status" onChange={handleChange} onBlur={handleBlur}>
               <option value="">-- Select a state --</option>
               <option value="new">New</option>
               <option value="inProcess">In process</option>
               <option value="finished">Finished</option>
             </select>
-            <div>{errors.status && <span>{errors.status}</span>}</div>
+            <div>
+              {errors.status && touched.status && <span>{errors.status}</span>}
+            </div>
           </div>
           <div>
-            <select name="priority" onChange={handleChange}>
+            <select name="priority" onChange={handleChange} onBlur={handleBlur}>
               <option value="">-- Select a priority --</option>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
             </select>
-            <div>{errors.priority && <span>{errors.priority}</span>}</div>
+            <div>
+              {errors.priority && touched.priority && (
+                <span>{errors.priority}</span>
+              )}
+            </div>
           </div>
         </div>
 
@@ -62,6 +71,7 @@ function TaskForm() {
           <textarea
             name="description"
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="Enter description for the task..."
           />
         </div>
