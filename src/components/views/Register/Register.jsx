@@ -1,40 +1,39 @@
 import React from "react";
-import { useFormik } from "formik";
 import { Link } from "react-router-dom";
-
-const validate = (values) => {
-  const errors = {};
-
-  if (!values.username) {
-    errors.username = "required";
-  }
-
-  if (!values.email) {
-    errors.email = "required";
-  }
-
-  if (!values.password) {
-    errors.password = "required";
-  }
-
-  return errors;
-};
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export const Register = () => {
+  const initialValues = {
+    username: "",
+    password: "",
+    email: "",
+    teamID: "",
+    role: "",
+    continent: "",
+    region: "",
+  };
+
+  const onSubmit = (values) => {
+    console.log("formik values", values);
+  };
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .required()
+      .min(4, "The minimun amount of characters is 4"),
+    password: Yup.string().required(),
+    email: Yup.string().email("Please enter a valid email").required(),
+    teamID: Yup.string().required(),
+    role: Yup.string().required(),
+    continent: Yup.string().required(),
+    region: Yup.string().required(),
+  });
+
   const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-      email: "",
-      teamID: "",
-      role: "",
-      continent: "",
-      region: "",
-    },
-    validate,
-    onSubmit: (values) => {
-      console.log("formik values", values);
-    },
+    initialValues,
+    validationSchema,
+    onSubmit,
   });
 
   return (
