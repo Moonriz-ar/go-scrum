@@ -1,5 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
+import { Link } from "react-router-dom";
 
 const validate = (values) => {
   const errors = {};
@@ -157,6 +158,10 @@ export const Register = () => {
 
         <div className="flex flex-wrap flex-col justify-center border border-gray-900 p-1">
           <button type="submit">Register</button>
+        </div>
+
+        <div className="py-1 w-fit">
+          <Link to="/login">Go to login</Link>
         </div>
       </form>
     </section>
